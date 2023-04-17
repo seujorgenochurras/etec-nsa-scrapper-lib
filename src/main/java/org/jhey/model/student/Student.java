@@ -5,9 +5,8 @@ public class Student {
   private String courseDivision;
   private String name;
   private String rm;
-  private String classCourse;
-  private String schoolGrade;
-
+  private String courseName;
+  private String schoolSeries;
    public String getClassDivision() {
       return classDivision;
    }
@@ -44,21 +43,21 @@ public class Student {
       return this;
    }
 
-   public String getClassCourse() {
-      return classCourse;
+   public String getCourseName() {
+      return courseName;
    }
 
-   public Student setClassCourse(String classCourse) {
-      this.classCourse = classCourse;
+   public Student setCourseName(String courseName) {
+      this.courseName = courseName;
       return this;
    }
 
-   public String getSchoolGrade() {
-      return schoolGrade;
+   public String getSchoolSeries() {
+      return schoolSeries;
    }
 
-   public Student setSchoolGrade(String schoolGrade) {
-      this.schoolGrade = schoolGrade;
+   public Student setSchoolSeries(String schoolSeries) {
+      this.schoolSeries = schoolSeries;
       return this;
    }
 }
