@@ -1,12 +1,23 @@
 package org.jhey.model.student;
 
 public class Student {
-  private String classDivision;
-  private String courseDivision;
-  private String name;
-  private String rm;
-  private String courseName;
-  private String schoolSeries;
+   private String classDivision;
+   private String courseDivision;
+   private String name;
+   private String rm;
+   private String courseName;
+   private String schoolSeries;
+   private String etecId;
+
+   public String getEtecId() {
+      return etecId;
+   }
+
+   public Student setEtecId(String etecId) {
+      this.etecId = etecId;
+      return this;
+   }
+
    public String getClassDivision() {
       return classDivision;
    }
