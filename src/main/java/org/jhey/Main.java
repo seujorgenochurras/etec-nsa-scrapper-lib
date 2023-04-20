@@ -1,12 +1,23 @@
 package org.jhey;
 
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.jhey.jsoup.NsaSession;
 
 public class Main {
    public static void main(String[] args) {
-      ChromeOptions options = new ChromeOptions().addArguments("--remote-allow-origins=*");
-      ChromeDriver chromeDriver = new ChromeDriver(options);
-      chromeDriver.get("localhost:5500/nsaPage.html");
+//      ChromeOptions options = new ChromeOptions().addArguments("--remote-allow-origins=*");
+//      ChromeDriver chromeDriver = new ChromeDriver(options);
+//      chromeDriver.get("https://nsa.cps.sp.gov.br/");
+//      Dotenv dotenv = Dotenv.load();
+//
+//      String rm = dotenv.get("RM");
+//      String password = dotenv.get("PASSWORD");
+//      String etecId = dotenv.get("ETEC_ID");
+//      String assemblyAiToken = dotenv.get("ASSEMBLYAI_TOKEN");
+//
+//      StudentCredentials credentials = new StudentCredentials(rm, password, etecId);
+//
+//      NsaLogin.login(LoginWith.credentials(credentials, assemblyAiToken, chromeDriver));
+      NsaSession nsaSession = new NsaSession("COOKIE");
+
    }
 }

@@ -1,5 +1,6 @@
 package org.jhey.model.html.page;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.jhey.captcha_breaker.stt.html.elements.captcha.Captcha;
 import org.jhey.captcha_breaker.stt.selenium.captcha.CaptchaFinder;
 import org.jhey.model.student.StudentCredentials;
@@ -42,9 +43,10 @@ public class LoginPage {
       this.userPass.sendKeys(ETEC_PASS);
    }
 
-   public String loginAndGetSessionTokenCookie() {
+
+   public String loginAndGetSessionTokenCookie(String assemblyAiToken) {
       insertStudentAccountInfo();
-      captcha.solveCaptcha();
+      captcha.solveCaptcha(assemblyAiToken);
       loginButton.click();
       return getSessionTokenCookie();
    }

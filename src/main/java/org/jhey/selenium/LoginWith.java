@@ -9,14 +9,12 @@ public class LoginWith {
    }
 
 
+
    /**
-    *
     * @param assemblyAiToken if you don't have a session token, we have to break the captcha.
+    * @param webDriver we need the webdriver to be able to
     * @see <a href="https://github.com/seujorgenochurras/captcha-breaker">Why you need the all of this stuff</a>
     * */
-   public static LoginWith credentials(String rm, String password, String etecId, String assemblyAiToken, WebDriver webDriver){
-      return new LoginWithCredentials(rm,password, etecId, assemblyAiToken, webDriver);
-   }
    public static LoginWith credentials(StudentCredentials credentials, String assemblyAiToken, WebDriver webDriver){
       return new LoginWithCredentials(credentials.rm(), credentials.passWord(), credentials.etecId(), assemblyAiToken, webDriver);
    }
@@ -43,7 +41,6 @@ public class LoginWith {
       private final String passWord;
       private final String etecId;
       private final String assemblyAiToken;
-
       private final WebDriver webDriver;
 
       public LoginWithCredentials(String rm, String passWord, String etecId, String assemblyAiToken, WebDriver webDriver) {
@@ -56,7 +53,6 @@ public class LoginWith {
 
       private StudentCredentials cachedCredentials;
       public StudentCredentials toStudentCredentials(){
-
          if (cachedCredentials == null){
             cachedCredentials = new StudentCredentials(rm, passWord, etecId);
          }
