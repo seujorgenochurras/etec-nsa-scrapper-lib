@@ -1,4 +1,4 @@
-package org.jhey.jsoup.domain;
+package org.jhey.jsoup.node;
 
 import java.nio.charset.Charset;
 import java.util.Objects;

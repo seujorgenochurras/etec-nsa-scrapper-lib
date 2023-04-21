@@ -8,8 +8,6 @@ public class LoginWith {
       //Utility class
    }
 
-
-
    /**
     * @param assemblyAiToken if you don't have a session token, we have to break the captcha.
     * @param webDriver we need the webdriver to be able to
@@ -61,7 +59,6 @@ public class LoginWith {
       public WebDriver getWebDriver() {
          return webDriver;
       }
-
 
       public String getAssemblyAiToken() {
          return assemblyAiToken;

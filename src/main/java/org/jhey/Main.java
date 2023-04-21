@@ -18,6 +18,5 @@ public class Main {
 //
 //      NsaLogin.login(LoginWith.credentials(credentials, assemblyAiToken, chromeDriver));
       NsaSession nsaSession = new NsaSession("COOKIE");
-
    }
 }

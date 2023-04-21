@@ -1,5 +1,6 @@
 package org.jhey.jsoup;
 
+import io.netty.channel.Channel;
 import org.jhey.jsoup.domain.NsaElement;
 import org.jhey.model.student.Student;
 import org.jsoup.Jsoup;
@@ -25,8 +26,8 @@ public class NsaSession {
 
       NsaElement studentTableElement = new NsaElement(jsoupManager.getHomePage()
               .selectFirst(studentTableCssQuery));
-
       studentTableElement.removeHtmlGarbage();
+      System.out.println(studentTableElement.getRawText());
    }
    private Elements filterTagFromHtmlDocument(String tag, Document htmlDocument){
       return htmlDocument.getElementsByTag(tag);
