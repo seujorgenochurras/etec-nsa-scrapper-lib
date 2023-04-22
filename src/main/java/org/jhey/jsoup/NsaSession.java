@@ -2,7 +2,7 @@ package org.jhey.jsoup;
 
 import org.jetbrains.annotations.NotNull;
 import org.jhey.jsoup.domain.NsaElement;
-import org.jhey.model.student.Student;
+import org.jhey.student.Student;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;

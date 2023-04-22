@@ -1,4 +1,4 @@
-package org.jhey.model.student;
+package org.jhey.student;
 
 public record StudentCredentials(String rm, String passWord, String etecId) {
 }

@@ -3,7 +3,7 @@ package org.jhey.selenium;
 
 import org.jhey.jsoup.NsaCookies;
 import org.jhey.jsoup.NsaSession;
-import org.jhey.model.html.page.LoginPage;
+import org.jhey.selenium.html.page.LoginPage;
 
 
 public class NsaLogin {

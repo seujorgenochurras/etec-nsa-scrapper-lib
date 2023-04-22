@@ -1,4 +1,4 @@
-package org.jhey.model.student;
+package org.jhey.student;
 
 public class Student {
    private String classDivision;

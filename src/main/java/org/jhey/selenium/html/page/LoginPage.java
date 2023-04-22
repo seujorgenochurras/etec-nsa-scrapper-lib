@@ -1,19 +1,15 @@
-package org.jhey.model.html.page;
+package org.jhey.selenium.html.page;
 
 import org.jhey.captcha_breaker.stt.html.elements.captcha.Captcha;
 import org.jhey.captcha_breaker.stt.selenium.captcha.CaptchaFinder;
 import org.jhey.jsoup.NsaCookies;
-import org.jhey.model.student.StudentCredentials;
+import org.jhey.student.StudentCredentials;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class LoginPage {
    @FindBy(id = "btnEntrar")

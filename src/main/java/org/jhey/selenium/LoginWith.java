@@ -1,6 +1,6 @@
 package org.jhey.selenium;
 
-import org.jhey.model.student.StudentCredentials;
+import org.jhey.student.StudentCredentials;
 import org.openqa.selenium.WebDriver;
 
 public class LoginWith {

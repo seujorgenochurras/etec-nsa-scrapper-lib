@@ -2,7 +2,7 @@ package org.jhey;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.jhey.jsoup.NsaSession;
-import org.jhey.model.student.StudentCredentials;
+import org.jhey.student.StudentCredentials;
 import org.jhey.selenium.LoginWith;
 import org.jhey.selenium.NsaLogin;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -24,7 +24,5 @@ public class Main {
 
      NsaSession session =
              NsaLogin.login(LoginWith.credentials(credentials, assemblyAiToken, chromeDriver));
-      System.out.println(session.getStudent());
-      System.out.println(session.getSessionCookie());
    }
 }
