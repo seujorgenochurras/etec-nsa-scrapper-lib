@@ -31,7 +31,6 @@ public class NsaSession {
 
    private NsaElement getStudentTableElement(){
       final String studentTableCssQuery = "#aspnetForm > div:nth-child(25) > div:nth-child(3) > table > tbody > tr:nth-child(1) > td:nth-child(1) > table > tbody";
-
       return new NsaElement(jsoupManager.getHomePage()
               .selectFirst(studentTableCssQuery));
    }

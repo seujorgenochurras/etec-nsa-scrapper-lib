@@ -18,9 +18,7 @@ public class JsoupManager {
       this.sessionToken = sessionToken;
    }
 
-  // private static final String NSA_HOME_PAGE_URL = "https://nsa.cps.sp.gov.br/";
-   //private static final String NSA_HOME_PAGE_URL = "localhost:5500/loginPage.html";
-   private static final String NSA_HOME_PAGE_URL = "http://127.0.0.1:5500/nsaHomePage.html";
+  private static final String NSA_HOME_PAGE_URL = "https://nsa.cps.sp.gov.br/alunos/frmmenu.aspx";
    private static final String NSA_TOKEN_COOKIE_NAME = "NSA_OnLine_SessionId";
 
 
