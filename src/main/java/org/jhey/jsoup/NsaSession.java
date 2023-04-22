@@ -3,7 +3,6 @@ package org.jhey.jsoup;
 import org.jetbrains.annotations.NotNull;
 import org.jhey.jsoup.domain.NsaElement;
 import org.jhey.model.student.Student;
-import org.jsoup.nodes.Element;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -12,7 +11,7 @@ import java.util.logging.Logger;
 
 public class NsaSession {
    private static final Logger logger = Logger.getLogger(NsaSession.class.getName());
-   private Student loggedInStudent;
+   private Student student;
    private final String sessionCookie;
 
    private final JsoupManager jsoupManager;
@@ -21,16 +20,15 @@ public class NsaSession {
       this.sessionCookie = sessionCookie;
       this.jsoupManager = new JsoupManager(sessionCookie);
 
-      initFetchStudentInfo();
+      fetchStudentInfo();
    }
 
-   private void initFetchStudentInfo(){
+   private void fetchStudentInfo(){
       NsaElement studentTableElement = getStudentTableElement();
-      studentTableElement.removeHtmlGarbage();
-
       StudentTableService studentTableService = new StudentTableService(studentTableElement);
-      this.loggedInStudent = studentTableService.convertStudentTableToStudent();
+      this.student = studentTableService.convertTableToStudent();
    }
+
    private NsaElement getStudentTableElement(){
       final String studentTableCssQuery = "#aspnetForm > div:nth-child(25) > div:nth-child(3) > table > tbody > tr:nth-child(1) > td:nth-child(1) > table > tbody";
 
@@ -38,8 +36,8 @@ public class NsaSession {
               .selectFirst(studentTableCssQuery));
    }
 
-   public Student getLoggedInStudent() {
-      return loggedInStudent;
+   public Student getStudent() {
+      return student;
    }
 
    public String getSessionCookie() {
@@ -48,45 +46,39 @@ public class NsaSession {
 
    private static final class StudentTableService {
       private final NsaElement studentTableElement;
+
       public StudentTableService(NsaElement studentTableElement) {
          this.studentTableElement = studentTableElement;
       }
 
-      private static final Set<String> studentInfoIdentifiers = Set.of(
-              "Identifica??o do Aluno",
-              "Nome",
-              "RA SED",
-              "Habilita??o",
-              "Matr?cula",
-              "Turma",
-              "M?dulo/S?rie",
-              "CURSANDO",
-              "Semestre OC: Ano OC",
-              "GRUPO",
-              "S?RIE Grupo da Divis?o");
-      public Student convertStudentTableToStudent(){
-         final String infoSplitterString = " : ";
-         String rawStudentTableInfo = studentTableElement.getRawText();
-         rawStudentTableInfo = removeIdentifiersFromStudentInfo(rawStudentTableInfo);
-         rawStudentTableInfo = rawStudentTableInfo.replace("?", ""); //Some unknown chars came with "?"
+      public Student convertTableToStudent() {
+         studentTableElement.removeHtmlGarbage();
 
-         String[] rawStudentInfoAsArray = rawStudentTableInfo.split(infoSplitterString);
-
-         return tryMapStudentWithStringArray(rawStudentInfoAsArray);
+         String studentInfo = StudentInfoFactory
+                 .of(studentTableElement.getRawText())
+                 .removeInfoIdentifiers()
+                 .removeUnknownChars()
+                 .removeInitialSpaces()
+                 .build();
+         return tryMapStudentInfo(studentInfo);
       }
-      private Student tryMapStudentWithStringArray(String[] studentInfoArray){
-         try{
-            return mapStudentInfoArrayToStudent(studentInfoArray);
-         }catch (IllegalArgumentException e){
+
+      private Student tryMapStudentInfo(String studentInfo) {
+         String infoSplitter = " : ";
+         String[] studentInfoSplitted = studentInfo.split(infoSplitter);
+         try {
+            return mapStudentInfoArrayToStudent(studentInfoSplitted);
+         } catch (IllegalArgumentException e) {
             logger.severe(e.getMessage());
             e.printStackTrace();
             return null;
          }
       }
-      private Student mapStudentInfoArrayToStudent(@NotNull String[] studentInfoArray)
-              throws IllegalArgumentException{
 
-         if(studentInfoArray.length != 8) throw new IllegalArgumentException("Student array has/hasn't too much info");
+      private Student mapStudentInfoArrayToStudent(@NotNull String[] studentInfoArray)
+              throws IllegalArgumentException {
+
+         if (studentInfoArray.length != 8) throw new IllegalArgumentException("Student array has/hasn't too much info");
          final int enrolmentRecordIndex = 0;
          final int nameIndex = 1;
          final int studentRegistryIdIndex = 2;
@@ -107,12 +99,61 @@ public class NsaSession {
                  .setYearThatJoinedSchool(studentInfoArray[yearThatJoinedSchoolIndex])
                  .setStudentRegistryId(studentInfoArray[studentRegistryIdIndex]);
       }
-      private String removeIdentifiersFromStudentInfo(@NotNull String studentInfo){
-         String studentInfoAsUtf8 = new String(studentInfo.getBytes() , StandardCharsets.UTF_8);
 
-         AtomicReference<String> result = new AtomicReference<>(studentInfoAsUtf8);
-         studentInfoIdentifiers.forEach(studentInfoIdentifier -> result.set(result.get().replace(studentInfoIdentifier, "")));
-         return result.get();
+      private static class StudentInfoFactory {
+
+         private String rawStudentInfoString;
+
+         public static StudentInfoFactory of(String rawStudentInfoString){
+            return new StudentInfoFactory(rawStudentInfoString);
+         }
+
+         private StudentInfoFactory(String rawStudentInfoString) {
+            this.rawStudentInfoString = rawStudentInfoString;
+         }
+
+         private static final Set<String> studentInfoIdentifiers = Set.of(
+                 "Identifica??o do Aluno",
+                 "Nome",
+                 "RA SED",
+                 "Habilita??o",
+                 "Matr?cula",
+                 "Turma",
+                 "TURMA",
+                 "M?dulo/S?rie",
+                 "CURSANDO",
+                 "Semestre OC: Ano OC",
+                 "GRUPO",
+                 "S?RIE Grupo da Divis?o");
+
+         public StudentInfoFactory removeInfoIdentifiers() {
+            String studentInfoAsUtf8 = new String(rawStudentInfoString.getBytes(), StandardCharsets.UTF_8);
+
+            AtomicReference<String> result = new AtomicReference<>(studentInfoAsUtf8);
+            studentInfoIdentifiers.forEach(studentInfoIdentifier -> result.set(result.get().replace(studentInfoIdentifier, "")));
+
+            rawStudentInfoString = result.get();
+            return this;
+         }
+         public StudentInfoFactory removeUnknownChars(){
+            rawStudentInfoString = rawStudentInfoString.replace("?", "");
+            return this;
+         }
+
+         public StudentInfoFactory removeInitialSpaces(){
+            rawStudentInfoString = rawStudentInfoString.replace("  ", " ");
+            return this;
+         }
+
+         public String build(){
+            return this.toString();
+         }
+
+         @Override
+         public String toString() {
+            return rawStudentInfoString;
+         }
       }
    }
 }
+
