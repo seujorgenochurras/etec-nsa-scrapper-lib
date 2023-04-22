@@ -12,13 +12,13 @@ import java.util.logging.Logger;
 public class NsaSession {
    private static final Logger logger = Logger.getLogger(NsaSession.class.getName());
    private Student student;
-   private final String sessionCookie;
+   private final NsaCookies sessionCookie;
 
    private final JsoupManager jsoupManager;
 
-   public NsaSession(String sessionCookie) {
-      this.sessionCookie = sessionCookie;
-      this.jsoupManager = new JsoupManager(sessionCookie);
+   public NsaSession(NsaCookies sessionCookies) {
+      this.sessionCookie = sessionCookies;
+      this.jsoupManager = new JsoupManager(sessionCookies);
 
       fetchStudentInfo();
    }
@@ -39,7 +39,7 @@ public class NsaSession {
       return student;
    }
 
-   public String getSessionCookie() {
+   public NsaCookies getSessionCookie() {
       return sessionCookie;
    }
 

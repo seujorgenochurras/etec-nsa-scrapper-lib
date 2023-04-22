@@ -1,8 +1,8 @@
 package org.jhey.model.html.page;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import org.jhey.captcha_breaker.stt.html.elements.captcha.Captcha;
 import org.jhey.captcha_breaker.stt.selenium.captcha.CaptchaFinder;
+import org.jhey.jsoup.NsaCookies;
 import org.jhey.model.student.StudentCredentials;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.NotFoundException;
@@ -10,6 +10,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LoginPage {
    @FindBy(id = "btnEntrar")
@@ -44,20 +48,27 @@ public class LoginPage {
    }
 
 
-   public String loginAndGetSessionTokenCookie(String assemblyAiToken) {
+   public NsaCookies loginAndGetSessionTokenCookie(String assemblyAiToken) {
       insertStudentAccountInfo();
       captcha.solveCaptcha(assemblyAiToken);
       loginButton.click();
-      return getSessionTokenCookie();
+      return getSessionTokenCookies();
    }
 
-   private String getSessionTokenCookie() {
-      return webDriver.manage()
+   private NsaCookies getSessionTokenCookies() {
+      final String ARRAffinity = getCookieValue("ARRAffinity");
+      final String ARRAffinitySameSite = getCookieValue("ARRAffinitySameSite");
+      final String NSA_OnLine_SessionId = getCookieValue("NSA_OnLine_SessionId");
+
+      return new NsaCookies(NSA_OnLine_SessionId, ARRAffinity, ARRAffinitySameSite);
+   }
+   private String getCookieValue(String cookieName){
+      return  webDriver.manage()
               .getCookies()
               .stream()
-              .filter(cookie -> cookie.getName().equals("NSA_OnLine_SessionId"))
-              .findFirst()
+              .filter(cookie -> cookie.getName().equals(cookieName))
               .map(Cookie::getValue)
-              .orElseThrow(() -> new NotFoundException("Cookie " + "NSA_OnLine_SessionId" + " not found"));
+              .findFirst()
+              .orElseThrow(() -> new NotFoundException("Cookie " + cookieName + " was not found"));
    }
 }

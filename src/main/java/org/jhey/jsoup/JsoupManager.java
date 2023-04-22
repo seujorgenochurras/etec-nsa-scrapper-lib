@@ -12,15 +12,13 @@ import java.util.logging.Logger;
 public class JsoupManager {
    private static final Logger logger = Logger.getLogger(JsoupManager.class.getName());
 
-   private final String sessionToken;
+   private final NsaCookies sessionCookies;
 
-   public JsoupManager(String sessionToken) {
-      this.sessionToken = sessionToken;
+   public JsoupManager(NsaCookies sessionCookies) {
+      this.sessionCookies = sessionCookies;
    }
 
-  private static final String NSA_HOME_PAGE_URL = "https://nsa.cps.sp.gov.br/alunos/frmmenu.aspx";
-   private static final String NSA_TOKEN_COOKIE_NAME = "NSA_OnLine_SessionId";
-
+   private static final String NSA_HOME_PAGE_URL = "https://nsa.cps.sp.gov.br/alunos/frmmenu.aspx";
 
    public Document getHomePage() {
       try {
@@ -35,6 +33,6 @@ public class JsoupManager {
    }
    private Connection createUrlConnection(String url) {
       return Jsoup.connect(url)
-              .cookie(NSA_TOKEN_COOKIE_NAME, sessionToken);
+              .cookies(sessionCookies);
    }
 }
