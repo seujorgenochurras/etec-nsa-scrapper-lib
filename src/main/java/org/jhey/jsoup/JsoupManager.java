@@ -1,6 +1,6 @@
 package org.jhey.jsoup;
 
-import org.jhey.jsoup.node.BetterDocument;
+import org.jhey.jsoup.domain.BetterDocument;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
