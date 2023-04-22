@@ -4,10 +4,14 @@ public class Student {
    private String classDivision;
    private String courseDivision;
    private String name;
-   private String rm;
+   private String enrolmentRecord;
    private String courseName;
-   private String schoolSeries;
+   private String schoolGrade;
    private String etecId;
+   
+   private String studentRegistryId;
+
+   private String yearThatJoinedSchool;
 
    public String getEtecId() {
       return etecId;
@@ -36,6 +40,24 @@ public class Student {
       return this;
    }
 
+   public String getStudentRegistryId() {
+      return studentRegistryId;
+   }
+
+   public Student setStudentRegistryId(String studentRegistryId) {
+      this.studentRegistryId = studentRegistryId;
+      return this;
+   }
+
+   public String getYearThatJoinedSchool() {
+      return yearThatJoinedSchool;
+   }
+
+   public Student setYearThatJoinedSchool(String yearThatJoinedSchool) {
+      this.yearThatJoinedSchool = yearThatJoinedSchool;
+      return this;
+   }
+
    public String getName() {
       return name;
    }
@@ -45,12 +67,12 @@ public class Student {
       return this;
    }
 
-   public String getRm() {
-      return rm;
+   public String getEnrolmentRecord() {
+      return enrolmentRecord;
    }
 
-   public Student setRm(String rm) {
-      this.rm = rm;
+   public Student setEnrolmentRecord(String enrolmentRecord) {
+      this.enrolmentRecord = enrolmentRecord;
       return this;
    }
 
@@ -63,12 +85,27 @@ public class Student {
       return this;
    }
 
-   public String getSchoolSeries() {
-      return schoolSeries;
+   public String getSchoolGrade() {
+      return schoolGrade;
    }
 
-   public Student setSchoolSeries(String schoolSeries) {
-      this.schoolSeries = schoolSeries;
+   public Student setSchoolGrade(String schoolGrade) {
+      this.schoolGrade = schoolGrade;
       return this;
+   }
+
+   @Override
+   public String toString() {
+      return "Student{\n" +
+              " \tclassDivision='" + classDivision + '\'' +
+              ",\n \t courseDivision='" + courseDivision + '\'' +
+              ",\n \t name='" + name + '\'' +
+              ",\n \t enrolmentRecord='" + enrolmentRecord + '\'' +
+              ",\n \t courseName='" + courseName + '\'' +
+              ",\n \t schoolGrade='" + schoolGrade + '\'' +
+              ",\n \t etecId='" + etecId + '\'' +
+              ",\n \t studentRegistryId='" + studentRegistryId + '\'' +
+              ",\n \t yearThatJoinedSchool='" + yearThatJoinedSchool + '\'' +
+              '}';
    }
 }
