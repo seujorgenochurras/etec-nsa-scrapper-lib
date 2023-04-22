@@ -9,10 +9,9 @@ import org.jsoup.nodes.Document;
 public class BetterDocument {
    private final Document baseDocument;
 
-   public BetterDocument( Document baseDocument) {
+   public BetterDocument(Document baseDocument) {
       this.baseDocument = baseDocument;
    }
-
 
    public Document getWithEncodedString(Charset charsetEncoder){
       return Jsoup.parse(new String(this.baseDocument.html().getBytes(), charsetEncoder));

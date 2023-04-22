@@ -16,7 +16,8 @@ public class NsaElement {
 
    public boolean hasNoText(){
       final String emptyCharInHtml = "&nbsp;";
-      return this.rootElement.wholeText().isBlank() || this.rootElement.toString().contains(emptyCharInHtml);
+      return this.rootElement.wholeText().isBlank() ||
+              this.rootElement.toString().contains(emptyCharInHtml);
    }
 
    public Element getRootElement() {
@@ -26,19 +27,18 @@ public class NsaElement {
    /**
     * Garbage means empty element and duplicates <br>
     * This also removes all the attributes of the element
-    * @return {@code Element} containing only those elements that are not duplicates and empty
     */
-   public Element removeHtmlGarbage(){
+   public void removeHtmlGarbage(){
       ElementSet cleanElementsSet = new ElementSet(rootElement.getAllElements());
 
       cleanElementsSet.removeEmptyAndDuplicatedElements();
       cleanElementsSet.removeAllAttributes();
-
       rootElement = cleanElementsSet.toElement();
-
-      return rootElement;
    }
 
+   public String getRawText(){
+      return this.rootElement.text();
+   }
    @Override
    public String toString() {
       return rootElement.toString();
@@ -53,13 +53,12 @@ public class NsaElement {
        * @return returns this collection as one Element
        */
       public Element toElement(){
-         Element resultedElement = (Element) this.toArray()[0];
+         Element resultedElement = new Element("_");//empty element
 
          Elements collectionAsElements = new Elements();
          collectionAsElements.addAll(this);
-         resultedElement.remove();
          for (Element element : collectionAsElements) {
-            resultedElement.appendElement(element.toString());
+            resultedElement.appendChild(element);
          }
          return resultedElement;
       }

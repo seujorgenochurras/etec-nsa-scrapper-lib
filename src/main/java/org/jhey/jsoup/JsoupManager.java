@@ -6,10 +6,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
-
 
 public class JsoupManager {
    private static final Logger logger = Logger.getLogger(JsoupManager.class.getName());
